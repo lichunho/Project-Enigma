@@ -3,9 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
-#include <fstream>
 #include <vector>
-
 
 using namespace std;
 
@@ -13,65 +11,61 @@ void rotorShift(string &map, bool debug);
 void activateRotor(string rotor[], bool debug);
 char encryptChar(char input, string map, bool debug);
 char decryptChar(char input, string map, bool debug);
-void rotorOperations(vector <char> &message, bool debug);
+void rotorOperations(vector<char> &message, bool debug);
 
 /*******************************************************************************
 rotorShift
 - Perform a shift on the rotor
 *******************************************************************************/
-void rotorShift(string &map, bool debug = false)
-{
+void rotorShift(string &map, bool debug = false) {
 
-  if (debug) cout << endl << "Map before change: " << map << endl;
+  if (debug)
+    cout << endl << "Map before change: " << map << endl;
 
   char temp = map.at(0);
 
-  for (int i = 0; i < map.size() - 1; i++)
-  {
-      map.at(i) = map.at(i + 1);
+  for (int i = 0; i < map.size() - 1; i++) {
+    map.at(i) = map.at(i + 1);
   }
 
   map.at(map.size() - 1) = temp;
 
-  if (debug) cout << "Map after change:  " << map << endl << endl;
-
+  if (debug)
+    cout << "Map after change:  " << map << endl << endl;
 }
 
 /*******************************************************************************
 activateRotor
 - Decide which rotor to rotate and call rotorShift
 *******************************************************************************/
-void activateRotor(string rotor[], bool debug = false)
-{
-  if(rotor[1].at(0) == 'A')
-  {
-    if(rotor[2].at(0) == 'A')
-    {
-      if (debug) cout << "Rotating 3rd rotor" << endl;
+void activateRotor(string rotor[], bool debug = false) {
+  if (rotor[1].at(0) == 'A') {
+    if (rotor[2].at(0) == 'A') {
+      if (debug)
+        cout << "Rotating 3rd rotor" << endl;
       rotorShift(rotor[3]);
     }
-    if (debug) cout << "Rotating 2nd rotor" << endl;
+    if (debug)
+      cout << "Rotating 2nd rotor" << endl;
     rotorShift(rotor[2]);
   }
-  if (debug) cout << "Rotating 1st rotor" << endl;
+  if (debug)
+    cout << "Rotating 1st rotor" << endl;
   rotorShift(rotor[1]);
 }
-
 
 /*******************************************************************************
 encryptChar
 - 
 *******************************************************************************/
-char encryptChar(char input, string map, bool debug = false)
-{
+char encryptChar(char input, string map, bool debug = false) {
   int position = 0;
   char output = ' ';
 
   position = input - 'A';
   output = map.at(position);
 
-  if(debug)
-  {
+  if (debug) {
     cout << endl;
     cout << "Character before encryption: " << input << endl;
     cout << "ABCDEFGHIJKLMNOPQRSTUVWXYZ" << endl;
@@ -85,19 +79,17 @@ char encryptChar(char input, string map, bool debug = false)
 
 /*******************************************************************************
 defineMap
-- Generate a 
+- Generate a
 
 *******************************************************************************/
-char decryptChar(char input, string map, bool debug = false)
-{
+char decryptChar(char input, string map, bool debug = false) {
   int position = 0;
   char output = ' ';
 
   position = map.find(input);
   output = position + 'A';
 
-  if(debug)
-  {
+  if (debug) {
     cout << endl;
     cout << "Character before decryption: " << input << endl;
     cout << map << endl;
@@ -111,18 +103,16 @@ char decryptChar(char input, string map, bool debug = false)
 
 /*******************************************************************************
 defineMap
-- Generate a 
+- Generate a
 
 *******************************************************************************/
-void rotorOperations(vector <char> &message, bool debug = false)
-{
+void rotorOperations(vector<char> &message, bool debug = false) {
   string rotor[] = {"EJMZALYXVBWFCRQUONTSPIKHGD", 
                     "EKMFLGDQVZNTOWYHXUSPAIBRCJ",
-                    "AJDKSIRUXBLHWTMCQGZNPYFVOE",
+                    "AJDKSIRUXBLHWTMCQGZNPYFVOE", 
                     "BDFHJLCPRTXVZNYEIWGAKMUSQO"};
 
-  for (int i = 0; i < message.size(); i++)
-  {
+  for (int i = 0; i < message.size(); i++) {
     message.at(i) = encryptChar(message.at(i), rotor[1]);
     message.at(i) = encryptChar(message.at(i), rotor[2]);
     message.at(i) = encryptChar(message.at(i), rotor[3]);
