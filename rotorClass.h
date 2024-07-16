@@ -2,7 +2,6 @@
 #define rotorClass_H
 
 #include <iostream>
-
 using namespace std;
 
 class rotor {
@@ -10,14 +9,13 @@ class rotor {
 private:
   string rotorWiring;
   char notchChar;
-
-public:
   char ringSetting;
   char currentPosition;
 
+public:
   /**************************************************************************
   CONSTRUCTOR default
-  - Perform a shift on the rotor
+  -
   **************************************************************************/
   rotor() {
     rotorWiring = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
@@ -41,7 +39,7 @@ public:
   getPosition
   - Get the current position of the rotor
   **************************************************************************/
-  char getPosistion() { return currentPosition;}
+  char getPosistion() { return currentPosition; }
 
   /**************************************************************************
   shift
@@ -60,18 +58,18 @@ public:
   }
 
   /**************************************************************************
-  rotateNext
+  advanceNext
     - Decides based on the notch whether the next rotor should be incremented
   **************************************************************************/
-  bool rotateNext(bool debug = false){
+  bool advanceNext(bool debug = false) {
 
-    bool rotateNext = false;
+    bool advanceNext = false;
 
     if (currentPosition == notchChar) {
-      rotateNext = true;
+      advanceNext = true;
     }
-      
-    return rotateNext;
+
+    return advanceNext;
   }
 
   /**************************************************************************
@@ -83,14 +81,12 @@ public:
     char output = ' ';
     int rotorOffset = 0;
 
-    //rotorOffset = currentPosition - 'A';
     rotorOffset = currentPosition - ringSetting;
     position = input - 'A' + rotorOffset;
 
     if (position > 26) {
       position -= 26;
-    }
-    else if (position < 0){
+    } else if (position < 0) {
       position += 26;
     }
 
@@ -130,8 +126,7 @@ public:
 
     if (offsetChar > 'Z') {
       offsetChar -= 26;
-    }
-    else if (offsetChar < 'A'){
+    } else if (offsetChar < 'A') {
       offsetChar += 26;
     }
 

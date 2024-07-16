@@ -2,66 +2,31 @@
 #define rotorOperations_H
 
 #include "rotorClass.h"
-#include <algorithm>
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
-void rotorOperations(bool debug = false)
-{
-  rotor rotorOne("EKMFLGDQVZNTOWYHXUSPAIBRCJ", 'Q', 'Z', 'A');
-  rotor rotorTwo("AJDKSIRUXBLHWTMCQGZNPYFVOE", 'E', 'Z', 'A');
-  rotor rotorThree("BDFHJLCPRTXVZNYEIWGAKMUSQO", 'V', 'Z', 'A');
-  rotor reflector("YRUHQSLDPXNGOKMIEBFZCWVJAT", ' ', 'A', 'A');
-  char temp = ' ';
-
-  for (int i = 0; i < 200; i++) {
-    temp = 'A';
-
-    if(rotorTwo.rotateNext()){
-      rotorOne.shift();
-      rotorTwo.shift();
-      rotorThree.shift();
-    }
-    else if(rotorThree.rotateNext()){
-      rotorTwo.shift();
-      rotorThree.shift();
-    }
-    else{
-      rotorThree.shift();
-    }
-
-    temp = rotorThree.encodeChar(temp);
-    temp = rotorTwo.encodeChar(temp);
-    temp = rotorOne.encodeChar(temp);
-    temp = reflector.encodeChar(temp);
-    temp = rotorOne.decodeChar(temp);
-    temp = rotorTwo.decodeChar(temp);
-    temp = rotorThree.decodeChar(temp);
-
-    cout << temp;
-    if((i+1)%5 == 0)  cout << " ";
-    if((i+1)%40 == 0)  cout << endl;
-
+char rotorOperations(rotor rotor[], char input, bool debug = false) {
+  if (rotor[2].advanceNext()) {
+    rotor[1].shift();
+    rotor[2].shift();
+    rotor[3].shift();
+  } else if (rotor[3].advanceNext()) {
+    rotor[2].shift();
+    rotor[3].shift();
+  } else {
+    rotor[3].shift();
   }
 
-  temp = ' ';
+  input = rotor[3].encodeChar(input);
+  input = rotor[2].encodeChar(input);
+  input = rotor[1].encodeChar(input);
+  input = rotor[0].encodeChar(input);
+  input = rotor[1].decodeChar(input);
+  input = rotor[2].decodeChar(input);
+  input = rotor[3].decodeChar(input);
+
+  return input;
 }
 
-
 #endif
-
-
-/**************************************************************************
-  
-  ABCDEFGHIJKLMNOPQRSTUVWXYZ
- BDFHJLCPRTXVZNYEIWGAKMUSQO
- ACEG
-  
-
-
-
-
-
-**************************************************************************/
