@@ -15,10 +15,10 @@ public:
   char ringSetting;
   char currentPosition;
 
-  /*******************************************************************************
+  /**************************************************************************
   CONSTRUCTOR default
   - Perform a shift on the rotor
-  *******************************************************************************/
+  **************************************************************************/
   rotor() {
     rotorWiring = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
     notchChar = 'Q';
@@ -26,10 +26,10 @@ public:
     currentPosition = 'A';
   }
 
-  /*******************************************************************************
+  /**************************************************************************
   CONSTRUCTOR
   - Perform a shift on the rotor
-  *******************************************************************************/
+  **************************************************************************/
   rotor(string key, char notch, char ring, char pos) {
     rotorWiring = key;
     notchChar = notch;
@@ -37,53 +37,70 @@ public:
     currentPosition = pos;
   }
 
-  /*******************************************************************************
-    rotorShift
-    - Roate the rotor and decide whether the next rotor needs to be rotated
-  *******************************************************************************/
-  bool shift(bool debug = false) {
-    bool rotateNext = false;
+  /**************************************************************************
+  getPosition
+  - Get the current position of the rotor
+  **************************************************************************/
+  char getPosistion() { return currentPosition;}
+
+  /**************************************************************************
+  shift
+    - Increment the rotor by one step and return to 'A' after 'Z'
+  **************************************************************************/
+  void shift(bool debug = false) {
+
+    currentPosition++;
+
+    if (currentPosition > 'Z') {
+      currentPosition = 'A';
+    }
 
     if (debug)
-      cout << "Position before rotate: " << currentPosition << endl;
+      cout << "Position after rotate: " << currentPosition << endl;
+  }
+
+  /**************************************************************************
+  rotateNext
+    - Decides based on the notch whether the next rotor should be incremented
+  **************************************************************************/
+  bool rotateNext(bool debug = false){
+
+    bool rotateNext = false;
 
     if (currentPosition == notchChar) {
       rotateNext = true;
     }
-
-    if (currentPosition < 'Z')
-    {
-      currentPosition++;
-    }
-    else
-    {
-      currentPosition = 'A';
-    }
       
-
-    if (debug)
-      cout << "Position after rotate: " << currentPosition << endl;
-
     return rotateNext;
   }
 
-  /*******************************************************************************
+  /**************************************************************************
   encodeChar
   - Handles the first half of the encoding (before reflector)
-*******************************************************************************/
-  char encodeChar(char input, bool debug = true) {
+  **************************************************************************/
+  char encodeChar(char input, bool debug = false) {
     int position = 0;
     char output = ' ';
     int rotorOffset = 0;
 
     rotorOffset = currentPosition - 'A';
     position = input - 'A' + rotorOffset;
+
+    if (position >= 26) {
+      position -= 26;
+    }
+
+    if (debug) {
+      cout << "Input: " << input << endl;
+      cout << "RotorOffset: " << rotorOffset << endl;
+      cout << "Position: " << position << endl;
+    }
+
     output = rotorWiring.at(position) - rotorOffset;
 
-    if(output < 'A')
-      {
-        output += 26;
-      }
+    if (output < 'A') {
+      output += 26;
+    }
 
     if (debug)
       cout << "Character after encode: " << output << endl;
@@ -91,29 +108,27 @@ public:
     return output;
   }
 
-  /*******************************************************************************
-    encodeChar
-    - Handles the first half of the encoding (before reflector)
-  *******************************************************************************/
+  /**************************************************************************
+  decodeChar
+  - Handles the first half of the encoding (before reflector)
+  **************************************************************************/
   char decodeChar(char input, bool debug = false) {
     int position = 0;
     char output = ' ';
     int rotorOffset = 0;
     char offsetChar = ' ';
-    
+
     rotorOffset = currentPosition - 'A';
     offsetChar = input + rotorOffset;
-    
-    if(offsetChar > 'Z')
-    {
+
+    if (offsetChar > 'Z') {
       offsetChar -= 26;
     }
-    
+
     position = rotorWiring.find(offsetChar);
     output = position + 'A' - rotorOffset;
 
-    if(output < 'A')
-    {
+    if (output < 'A') {
       output += 26;
     }
 

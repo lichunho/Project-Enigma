@@ -45,17 +45,28 @@ int main() {
 
   bool rotateNext = false;
 
-  for (int i = 0; i < 47; i++) {
+  for (int i = 0; i < 120; i++) {
     temp = 'A';
-    rotateNext = rotorThree.shift();
-    if(rotateNext)
-    {
-      rotateNext = rotorTwo.shift();
-      if(rotateNext)
-      {
-        rotateNext = rotorThree.shift();
-      }
+    
+    if(rotorTwo.rotateNext()){
+      rotorOne.shift();
+      rotorTwo.shift();
+      rotorThree.shift();
     }
+    else if(rotorThree.rotateNext()){
+      rotorTwo.shift();
+      rotorThree.shift();
+    }
+    else{
+      rotorThree.shift();
+    }
+
+    /*
+    cout << rotorOne.getPosistion(); 
+    cout << rotorTwo.getPosistion();
+    cout << rotorThree.getPosistion();
+    cout << endl;
+    */
 
     temp = rotorThree.encodeChar(temp);
     temp = rotorTwo.encodeChar(temp);
@@ -66,7 +77,6 @@ int main() {
     temp = rotorThree.decodeChar(temp);
 
     cout << temp;
-
     if((i+1)%5 == 0)  cout << " ";
     
   }
