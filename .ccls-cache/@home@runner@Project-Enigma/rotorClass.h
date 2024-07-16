@@ -110,7 +110,7 @@ public:
 
   /**************************************************************************
   decodeChar
-  - Handles the first half of the encoding (before reflector)
+  - Handles the second half of the encoding (after reflector)
   **************************************************************************/
   char decodeChar(char input, bool debug = false) {
     int position = 0;

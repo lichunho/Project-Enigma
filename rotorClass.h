@@ -83,11 +83,15 @@ public:
     char output = ' ';
     int rotorOffset = 0;
 
-    rotorOffset = currentPosition - 'A';
+    //rotorOffset = currentPosition - 'A';
+    rotorOffset = currentPosition - ringSetting;
     position = input - 'A' + rotorOffset;
 
-    if (position >= 26) {
+    if (position > 26) {
       position -= 26;
+    }
+    else if (position < 0){
+      position += 26;
     }
 
     if (debug) {
@@ -101,6 +105,9 @@ public:
     if (output < 'A') {
       output += 26;
     }
+    if (output > 'Z') {
+      output -= 26;
+    }
 
     if (debug)
       cout << "Character after encode: " << output << endl;
@@ -110,7 +117,7 @@ public:
 
   /**************************************************************************
   decodeChar
-  - Handles the first half of the encoding (before reflector)
+  - Handles the second half of the encoding (after reflector)
   **************************************************************************/
   char decodeChar(char input, bool debug = false) {
     int position = 0;
@@ -118,11 +125,14 @@ public:
     int rotorOffset = 0;
     char offsetChar = ' ';
 
-    rotorOffset = currentPosition - 'A';
+    rotorOffset = currentPosition - ringSetting;
     offsetChar = input + rotorOffset;
 
     if (offsetChar > 'Z') {
       offsetChar -= 26;
+    }
+    else if (offsetChar < 'A'){
+      offsetChar += 26;
     }
 
     position = rotorWiring.find(offsetChar);
@@ -130,6 +140,9 @@ public:
 
     if (output < 'A') {
       output += 26;
+    }
+    if (output > 'Z') {
+      output -= 26;
     }
 
     if (debug)
