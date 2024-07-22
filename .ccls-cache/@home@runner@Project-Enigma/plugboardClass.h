@@ -5,23 +5,32 @@
 
 using namespace std;
 
-class plugboardPair {
+class plugboard {
 private:
   char letterOne;
   char letterTwo;
 
 public:
-  plugboardPair() {
+  plugboard() {
     letterOne = ' ';
     letterTwo = ' ';
   }
 
-  plugboardPair(char letterA, char letterB) {
+  plugboard(char letterA, char letterB) {
     letterOne = letterA;
     letterTwo = letterB;
   }
 
-  char swapChar(char input, bool debug) {
+  bool contains(char input) {
+    if (input == letterOne || input == letterTwo) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  char swapChar(char input, bool debug = false) {
     char output = ' ';
 
     if (input == letterOne) {

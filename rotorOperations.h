@@ -2,10 +2,55 @@
 #define rotorOperations_H
 
 #include "rotorClass.h"
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
+/**************************************************************************
+importRotorDetails
+- Receives user selection of the rotors/reflector
+- Opens txt file and import the corresponding rotor detials
+**************************************************************************/
+rotor importRotorDetails(string rotorSelection) {
+  ifstream rotorDetails;
+  rotorDetails.open("rotorDetails.txt");
+
+  rotor designatedRotor;
+  string rotorIndex;
+  string rotorWiring;
+  char rotorNotchChar;
+  string disregardLine;
+
+  while (!rotorDetails.eof()) {
+    rotorDetails >> rotorIndex;
+    if (rotorIndex == rotorSelection) {
+      rotorDetails >> rotorWiring >> rotorNotchChar;
+      designatedRotor.setWiring(rotorWiring);
+      designatedRotor.setNotch(rotorNotchChar);
+    } else {
+      getline(rotorDetails, disregardLine);
+    }
+  }
+
+  rotorDetails.close();
+
+  return designatedRotor;
+}
+
+/**************************************************************************
+initializeRotors
+- 
+**************************************************************************/
+void initializeRotors(rotor rotor[4], string selection[]){
+  
+}
+
+/**************************************************************************
+rotorOperations
+- Receives user selection of the rotors/reflector
+- Opens txt file and import the corresponding rotor detials
+**************************************************************************/
 char rotorOperations(rotor rotor[], char input, bool debug = false) {
   if (rotor[2].advanceNext()) {
     rotor[1].shift();

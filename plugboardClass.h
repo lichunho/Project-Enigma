@@ -21,6 +21,15 @@ public:
     letterTwo = letterB;
   }
 
+  bool contains(char input) {
+    if (input == letterOne || input == letterTwo) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
   char swapChar(char input, bool debug = false) {
     char output = ' ';
 

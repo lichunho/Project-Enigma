@@ -15,7 +15,6 @@ private:
 public:
   /**************************************************************************
   CONSTRUCTOR default
-  -
   **************************************************************************/
   rotor() {
     rotorWiring = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
@@ -26,7 +25,16 @@ public:
 
   /**************************************************************************
   CONSTRUCTOR
-  - Perform a shift on the rotor
+  **************************************************************************/
+  rotor(string key, char notch) {
+    rotorWiring = key;
+    notchChar = notch;
+    ringSetting = 'A';
+    currentPosition = 'A';
+  }
+
+  /**************************************************************************
+  CONSTRUCTOR
   **************************************************************************/
   rotor(string key, char notch, char ring, char pos) {
     rotorWiring = key;
@@ -34,6 +42,16 @@ public:
     ringSetting = ring;
     currentPosition = pos;
   }
+
+  void setWiring(string key) { rotorWiring = key; }
+  void setNotch(char notch) { notchChar = notch; }
+  void setRing(char ring) { ringSetting = ring; }
+
+  /**************************************************************************
+  setPosition
+  - set the initial position of the rotor
+  **************************************************************************/
+  void setPosition(char pos) { currentPosition = pos; }
 
   /**************************************************************************
   getPosition
@@ -144,6 +162,19 @@ public:
       cout << "Character after decode: " << output << endl;
 
     return output;
+  }
+
+  /**************************************************************************
+  printRotor
+  - prints out the rotor settings
+  **************************************************************************/
+  void printRotor() {
+    cout << "-------------------------------------------------------" << endl;
+    cout << "Printing rotor details" << endl;
+    cout << "Rotor wiring: " << rotorWiring << endl;
+    cout << "Rotor notch position: " << notchChar << endl;
+    cout << "Ring setting: " << ringSetting << endl;
+    cout << "Current position: " << currentPosition << endl;
   }
 };
 #endif

@@ -1,3 +1,12 @@
 {
-  "files": {}
+  "files": {
+    "rotorClass.h": [
+      {
+        "id": "d56ce405-fb84-4b20-b663-ce02117f4877",
+        "line": 29,
+        "version": 5522,
+        "index": 686
+      }
+    ]
+  }
 }
