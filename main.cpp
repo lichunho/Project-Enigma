@@ -51,32 +51,47 @@ void getUserInput(rotor rotor[], string selection[], char setting[],
 int main() {
 
   vector<plugboard> plugboardPairs;
-  createPair(plugboardPairs, 'A', 'B');
+  createPair(plugboardPairs, 'U', 'Z');
+  createPair(plugboardPairs, 'M', 'B');
+  createPair(plugboardPairs, 'Y', 'T');
+  createPair(plugboardPairs, 'P', 'C');
+  createPair(plugboardPairs, 'N', 'H');
 
   rotor rotor[4];
-  
-  string selection[4];
-  char setting[4];
-  char position[4];
 
-  getUserInput(rotor, selection, setting, position);
+  string selection[4] = {"B", "VI", "VII", "VIII"};
+  char setting[4] = {' ', 'I', 'H', 'F'};
+  char position[4] = {' ', 'N', 'I', 'I'};
+
+  //getUserInput(rotor, selection, setting, position);
   initializeRotors(rotor, selection, setting, position);
 
+  for (int i = 0; i < 4; i++) {
+    // rotor[i].printRotor();
+  }
+
   string userInput;
-  cout << "Please input the message to be encrypted" << endl;
-  cout << "-> ";
-  cin >> userInput;
+  // cout << "Please input the message to be encrypted" << endl;
+  // cout << "-> ";
+   cin >> userInput;
+
+  for (int i = 0; i < 100; i++) {
+    //userInput.push_back('A');
+  }
 
   char input = ' ';
-  cout << "The encrypted message will be" << endl;
-  cout << "-> ";
+  string output = "";
   for (int i = 0; i < userInput.size(); i++) {
     input = userInput[i];
     input = plugboardOperations(plugboardPairs, input);
     input = rotorOperations(rotor, input);
     input = plugboardOperations(plugboardPairs, input);
-    cout << input;
+    output.push_back(input);
+    if (!((i + 1) % 5))
+      output.push_back(' ');
   }
+  cout << "The encrypted message will be" << endl;
+  cout << "-> " << output;
 
   return 0;
 }

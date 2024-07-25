@@ -2,13 +2,14 @@
 #define rotorClass_H
 
 #include <iostream>
+//#include <string>
 using namespace std;
 
 class rotor {
 
 private:
   string rotorWiring;
-  char notchChar;
+  string notchPosition;
   char ringSetting;
   char currentPosition;
 
@@ -18,7 +19,7 @@ public:
   **************************************************************************/
   rotor() {
     rotorWiring = "BDFHJLCPRTXVZNYEIWGAKMUSQO";
-    notchChar = 'Q';
+    notchPosition = "Q";
     ringSetting = 'A';
     currentPosition = 'A';
   }
@@ -26,9 +27,9 @@ public:
   /**************************************************************************
   CONSTRUCTOR
   **************************************************************************/
-  rotor(string rotorWiring, char notchChar) {
+  rotor(string rotorWiring, string notchPosition) {
     this -> rotorWiring = rotorWiring;
-    this -> notchChar = notchChar;
+    this -> notchPosition = notchPosition;
     this -> ringSetting = 'A';
     this -> currentPosition = 'A';
   }
@@ -38,7 +39,7 @@ public:
   - Set the parimeters of the rotor class
   **************************************************************************/
   void setWiring(string key) { rotorWiring = key; }
-  void setNotch(char notch) { notchChar = notch; }
+  void setNotch(string notch) { notchPosition = notch; }
   void setRing(char ring) { ringSetting = ring; }
   void setPosition(char pos) { currentPosition = pos; }
 
@@ -47,7 +48,7 @@ public:
   - Get the parameters of the rotor class
   **************************************************************************/
   string getWiring() { return rotorWiring; }
-  char getNotch() { return notchChar; }
+  string getNotch() { return notchPosition; }
   char getRing() { return ringSetting; }
   char getPosistion() { return currentPosition; }
 
@@ -75,10 +76,10 @@ public:
 
     bool advanceNext = false;
 
-    if (currentPosition == notchChar) {
+    if (notchPosition.find(currentPosition) != notchPosition.npos) {
       advanceNext = true;
     }
-
+    
     return advanceNext;
   }
 
@@ -94,7 +95,7 @@ public:
     rotorOffset = currentPosition - ringSetting;
     position = input - 'A' + rotorOffset;
 
-    if (position > 26) {
+    if (position >= 26) {
       position -= 26;
     } else if (position < 0) {
       position += 26;
@@ -164,7 +165,7 @@ public:
     cout << "-------------------------------------------------------" << endl;
     cout << "Printing rotor details" << endl;
     cout << "Rotor wiring: " << rotorWiring << endl;
-    cout << "Rotor notch position: " << notchChar << endl;
+    cout << "Rotor notch position: " << notchPosition << endl;
     cout << "Ring setting: " << ringSetting << endl;
     cout << "Current position: " << currentPosition << endl;
   }

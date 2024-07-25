@@ -19,15 +19,15 @@ rotor importRotorDetails(string rotorSelection) {
   rotor designatedRotor;
   string rotorIndex;
   string rotorWiring;
-  char rotorNotchChar;
+  string rotorNotchPosition;
   string disregardLine;
 
   while (!rotorDetails.eof()) {
     rotorDetails >> rotorIndex;
     if (rotorIndex == rotorSelection) {
-      rotorDetails >> rotorWiring >> rotorNotchChar;
+      rotorDetails >> rotorWiring >> rotorNotchPosition;
       designatedRotor.setWiring(rotorWiring);
-      designatedRotor.setNotch(rotorNotchChar);
+      designatedRotor.setNotch(rotorNotchPosition);
     } else {
       getline(rotorDetails, disregardLine);
     }
@@ -39,46 +39,19 @@ rotor importRotorDetails(string rotorSelection) {
 }
 
 /**************************************************************************
-selectRotors
-- Update the rotor details into the rotor based on user selection
-**************************************************************************/
-void selectRotors(rotor rotor[], string selection[]) {
-
-  for (int i = 0; i <= 3; i++) {
-    rotor[i] = importRotorDetails(selection[i]);
-  }
-}
-
-/**************************************************************************
-configRingSetting
-- Update the ringSettings on rotors based on userInput
-**************************************************************************/
-void configRingSetting(rotor rotor[], char setting[]) {
-  for (int i = 1; i <= 3; i++) {
-    rotor[i].setRing(setting[i]);
-  }
-}
-
-/**************************************************************************
-initialPosition
-- Update the ringSettings on rotors based on userInput
-**************************************************************************/
-void initialPosition(rotor rotor[], char position[]) {
-  for (int i = 1; i <= 3; i++) {
-    rotor[i].setPosition(position[i]);
-  }
-}
-
-/**************************************************************************
-initialPosition
+initializeRotors
 - Update the ringSettings on rotors based on userInput
 **************************************************************************/
 void initializeRotors(rotor rotor[], string selection[], char setting[],
                       char position[]) {
 
-  selectRotors(rotor, selection);
-  configRingSetting(rotor, setting);
-  initialPosition(rotor, position);
+  rotor[0] = importRotorDetails(selection[0]);
+  for (int i = 1; i <= 3; i++) {
+    rotor[i] = importRotorDetails(selection[i]);
+    rotor[i].setRing(setting[i]);
+    rotor[i].setPosition(position[i]);
+  }
+  
 }
 
 /**************************************************************************
@@ -99,6 +72,17 @@ char rotorOperations(rotor rotor[], char input, bool debug = false) {
     rotor[3].shift();
   }
 
+  if(debug)
+  {
+    cout << "Rotor config: ";
+    for(int i = 1; i <= 3; i++)
+      {
+        cout << rotor[i].getPosistion();
+      }
+    cout << endl;
+  }
+
+  
   input = rotor[3].encodeChar(input);
   input = rotor[2].encodeChar(input);
   input = rotor[1].encodeChar(input);
