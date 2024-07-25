@@ -5,17 +5,63 @@
 
 using namespace std;
 
+void getUserInput(rotor rotor[], string selection[], char setting[],
+                  char position[]) {
+  bool needGuide = false;
+
+  cout << "Do you require a step-by-step guide? " << endl;
+  cout << "'Y' for yes, input settings directly if no" << endl;
+  cout << "-> ";
+  cin >> selection[0];
+
+  if (selection[0] == "Y") {
+    needGuide = true;
+  }
+
+  if (needGuide) {
+    cout << "Please select the reflector: " << endl;
+    cout << "Options: B, C (Choose 1)" << endl;
+    cout << "-> ";
+    cin >> selection[0];
+  }
+
+  if (needGuide) {
+    cout << "Please input the rotor selection: " << endl;
+    cout << "Options: I, II, III, IV, V, VI, VII, VIII (Choose 3)" << endl;
+    cout << "(e.g.: I II III)" << endl;
+    cout << "-> ";
+  }
+  cin >> selection[1] >> selection[2] >> selection[3];
+
+  if (needGuide) {
+    cout << "Please input the rotor settings: " << endl;
+    cout << "(e.g.: A A A)" << endl;
+    cout << "-> ";
+  }
+  cin >> setting[1] >> setting[2] >> setting[3];
+
+  if (needGuide) {
+    cout << "Please input the rotor position: " << endl;
+    cout << "(e.g.: A A A)" << endl;
+    cout << "-> ";
+  }
+  cin >> position[1] >> position[2] >> position[3];
+}
+
 int main() {
 
   vector<plugboard> plugboardPairs;
-  createPair(plugboardPairs,'A','B');
+  createPair(plugboardPairs, 'A', 'B');
 
   rotor rotor[4];
-  rotor[0] = importRotorDetails("B");
-  rotor[1] = importRotorDetails("I");
-  rotor[2] = importRotorDetails("II");
-  rotor[3] = importRotorDetails("III");
   
+  string selection[4];
+  char setting[4];
+  char position[4];
+
+  getUserInput(rotor, selection, setting, position);
+  initializeRotors(rotor, selection, setting, position);
+
   string userInput;
   cout << "Please input the message to be encrypted" << endl;
   cout << "-> ";

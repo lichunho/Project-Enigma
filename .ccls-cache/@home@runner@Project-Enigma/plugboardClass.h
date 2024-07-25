@@ -21,15 +21,23 @@ public:
     letterTwo = letterB;
   }
 
+  /**************************************************************************
+  contains
+    - Returns true if the pair contains the userInput
+    - i.e. to check if the letter is already plugged in
+  **************************************************************************/
   bool contains(char input) {
     if (input == letterOne || input == letterTwo) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
 
+  /**************************************************************************
+  swapChar
+    - Perform the swap
+  **************************************************************************/
   char swapChar(char input, bool debug = false) {
     char output = ' ';
 

@@ -26,42 +26,34 @@ public:
   /**************************************************************************
   CONSTRUCTOR
   **************************************************************************/
-  rotor(string key, char notch) {
-    rotorWiring = key;
-    notchChar = notch;
-    ringSetting = 'A';
-    currentPosition = 'A';
+  rotor(string rotorWiring, char notchChar) {
+    this -> rotorWiring = rotorWiring;
+    this -> notchChar = notchChar;
+    this -> ringSetting = 'A';
+    this -> currentPosition = 'A';
   }
 
   /**************************************************************************
-  CONSTRUCTOR
+  setters
+  - Set the parimeters of the rotor class
   **************************************************************************/
-  rotor(string key, char notch, char ring, char pos) {
-    rotorWiring = key;
-    notchChar = notch;
-    ringSetting = ring;
-    currentPosition = pos;
-  }
-
   void setWiring(string key) { rotorWiring = key; }
   void setNotch(char notch) { notchChar = notch; }
   void setRing(char ring) { ringSetting = ring; }
-
-  /**************************************************************************
-  setPosition
-  - set the initial position of the rotor
-  **************************************************************************/
   void setPosition(char pos) { currentPosition = pos; }
 
   /**************************************************************************
-  getPosition
-  - Get the current position of the rotor
+  getters
+  - Get the parameters of the rotor class
   **************************************************************************/
+  string getWiring() { return rotorWiring; }
+  char getNotch() { return notchChar; }
+  char getRing() { return ringSetting; }
   char getPosistion() { return currentPosition; }
 
   /**************************************************************************
   shift
-    - Increment the rotor by one step and return to 'A' after 'Z'
+  - Increment the rotor by one step and return to 'A' after 'Z'
   **************************************************************************/
   void shift(bool debug = false) {
 

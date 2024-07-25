@@ -39,17 +39,53 @@ rotor importRotorDetails(string rotorSelection) {
 }
 
 /**************************************************************************
-initializeRotors
-- 
+selectRotors
+- Update the rotor details into the rotor based on user selection
 **************************************************************************/
-void initializeRotors(rotor rotor[4], string selection[]){
-  
+void selectRotors(rotor rotor[], string selection[]) {
+
+  for (int i = 0; i <= 3; i++) {
+    rotor[i] = importRotorDetails(selection[i]);
+  }
+}
+
+/**************************************************************************
+configRingSetting
+- Update the ringSettings on rotors based on userInput
+**************************************************************************/
+void configRingSetting(rotor rotor[], char setting[]) {
+  for (int i = 1; i <= 3; i++) {
+    rotor[i].setRing(setting[i]);
+  }
+}
+
+/**************************************************************************
+initialPosition
+- Update the ringSettings on rotors based on userInput
+**************************************************************************/
+void initialPosition(rotor rotor[], char position[]) {
+  for (int i = 1; i <= 3; i++) {
+    rotor[i].setPosition(position[i]);
+  }
+}
+
+/**************************************************************************
+initialPosition
+- Update the ringSettings on rotors based on userInput
+**************************************************************************/
+void initializeRotors(rotor rotor[], string selection[], char setting[],
+                      char position[]) {
+
+  selectRotors(rotor, selection);
+  configRingSetting(rotor, setting);
+  initialPosition(rotor, position);
 }
 
 /**************************************************************************
 rotorOperations
-- Receives user selection of the rotors/reflector
-- Opens txt file and import the corresponding rotor detials
+- Perform the rotor operations
+- Rotor 1 to 3 -> reflector -> rotor 3 -> 1
+- Incredment the rotors after each operation
 **************************************************************************/
 char rotorOperations(rotor rotor[], char input, bool debug = false) {
   if (rotor[2].advanceNext()) {
