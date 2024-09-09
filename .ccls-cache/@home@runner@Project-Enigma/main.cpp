@@ -5,16 +5,21 @@
 
 using namespace std;
 
-void getUserInput(rotor rotor[], string selection[], char setting[],
-                  char position[]) {
+/**************************************************************************
+getRotorInput
+- Receives user selection of the rotors/reflector
+- Opens txt file and import the corresponding rotor detials
+**************************************************************************/
+void getRotorInput(string selection[], char setting[], char position[]) {
   bool needGuide = false;
 
+  //INPUT 
   cout << "Do you require a step-by-step guide? " << endl;
   cout << "'Y' for yes, input settings directly if no" << endl;
   cout << "-> ";
   cin >> selection[0];
 
-  if (selection[0] == "Y") {
+ if (selection[0] == "Y" || selection[0] == "y") {
     needGuide = true;
   }
 
@@ -50,46 +55,48 @@ void getUserInput(rotor rotor[], string selection[], char setting[],
 
 int main() {
 
-  vector<plugboard> plugboardPairs;
-  createPair(plugboardPairs, 'U', 'Z');
-  createPair(plugboardPairs, 'M', 'B');
-  createPair(plugboardPairs, 'Y', 'T');
-  createPair(plugboardPairs, 'P', 'C');
-  createPair(plugboardPairs, 'N', 'H');
-
+  bool debug = false;
+  
   rotor rotor[4];
+  string selection[4] = {"B", "I", "II", "III"};
+  char setting[4] = {' ', 'A', 'A', 'A'};
+  char position[4] = {' ', 'A', 'A', 'A'};
 
-  string selection[4] = {"B", "VI", "VII", "VIII"};
-  char setting[4] = {' ', 'I', 'H', 'F'};
-  char position[4] = {' ', 'N', 'I', 'I'};
-
-  //getUserInput(rotor, selection, setting, position);
+  getRotorInput(selection, setting, position);
   initializeRotors(rotor, selection, setting, position);
 
-  for (int i = 0; i < 4; i++) {
-    // rotor[i].printRotor();
+  if(debug){
+    for (int i = 0; i < 4; i++) {
+       rotor[i].printRotor();
+    }
   }
+
+  //INPUT - Get plugboard input from user
+  vector<plugboard> plugboardPairs;
+  //createPair(plugboardPairs, 'U', 'Z');
+
 
   string userInput;
-  // cout << "Please input the message to be encrypted" << endl;
-  // cout << "-> ";
-   cin >> userInput;
+  cout << "Please input the message to be encrypted" << endl;
+  cout << "-> ";
+  cin >> userInput;
 
-  for (int i = 0; i < 100; i++) {
-    //userInput.push_back('A');
-  }
-
+  //PROCESSING - Perform the encryption process
   char input = ' ';
   string output = "";
   for (int i = 0; i < userInput.size(); i++) {
-    input = userInput[i];
+    input = toupper(userInput[i]);
     input = plugboardOperations(plugboardPairs, input);
     input = rotorOperations(rotor, input);
     input = plugboardOperations(plugboardPairs, input);
     output.push_back(input);
+    
+    //Print a space every 5 character to increase readability
     if (!((i + 1) % 5))
       output.push_back(' ');
   }
+
+  //OUTPUT - Print the encrypted message
   cout << "The encrypted message will be" << endl;
   cout << "-> " << output;
 
