@@ -29,7 +29,8 @@ void createPair(vector <plugboard> &pair, char letterA, char letterB) {
 			cout << "ERROR - " << letterB << " is already being used." << endl;
 	}
 	else{
-		pair.push_back({letterA, letterB});
+		plugboard currPair = plugboard(letterA, letterB);
+		pair.push_back(currPair);
 	}
 
 	
