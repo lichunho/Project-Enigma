@@ -62,8 +62,20 @@ bool rotor::advanceNext(bool debug) {
 
   bool advanceNext = false;
 
-  if (notchPosition.find(currentPosition) != notchPosition.npos) {
-    advanceNext = true;
+  int ringOffset = ringSetting - 'A';
+  for (size_t i = 0; i < notchPosition.size(); i++) {
+    char notch = notchPosition.at(i);
+    char effectiveNotch = notch - ringOffset;
+    if (effectiveNotch < 'A') {
+      effectiveNotch += 26;
+    }
+    if (effectiveNotch > 'Z') {
+      effectiveNotch -= 26;
+    }
+    if (effectiveNotch == currentPosition) {
+      advanceNext = true;
+      break;
+    }
   }
   
   return advanceNext;
@@ -155,4 +167,3 @@ void rotor::printRotor() {
   cout << "Ring setting: " << ringSetting << endl;
   cout << "Current position: " << currentPosition << endl;
 }
-

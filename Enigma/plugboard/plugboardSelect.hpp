@@ -11,7 +11,7 @@ getPlugboardInput
 - Receives user selection of the plugboard
 - Opens txt file and import the corresponding plugboard detials
 **************************************************************************/
-void getPlugboardInput(Plugboard plugboard);
+void getPlugboardInput(Plugboard *plugboard);
 
 bool getValidPair(bool needGuide, Plugboard plugboard, char selection[]);
 

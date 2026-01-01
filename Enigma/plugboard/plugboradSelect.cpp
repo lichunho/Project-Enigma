@@ -1,6 +1,8 @@
 #include "plugboardSelect.hpp"
 
-void getPlugboardInput(Plugboard plugboard)
+#include <cctype>
+
+void getPlugboardInput(Plugboard *plugboard)
 {
     bool needGuide = false;
     string choice;
@@ -18,8 +20,8 @@ void getPlugboardInput(Plugboard plugboard)
         return;
     }
 
-    while (getValidPair(needGuide, plugboard, selection)) {
-        plugboard.createPair(selection[0], selection[1]);
+    while (getValidPair(needGuide, *plugboard, selection)) {
+        plugboard->createPair(selection[0], selection[1]);
         cout << "Created pair: " << selection[0] << " <-> " << selection[1]
              << endl;
     }
@@ -58,14 +60,20 @@ bool getValidPair(bool needGuide, Plugboard plugboard, char selection[])
         }
 
         cin >> input;
-        ;
 
         if (input == "end" || input == "END") {
             return false;
         }
 
-        selection[0] = toupper(input[0]);
-        selection[1] = toupper(input[1]);
+        if (input.size() != 2) {
+            validInput = false;
+            cout << "Invalid input, please try again." << endl;
+            needGuide = true;
+            continue;
+        }
+
+        selection[0] = static_cast<char>(toupper(static_cast<unsigned char>(input[0])));
+        selection[1] = static_cast<char>(toupper(static_cast<unsigned char>(input[1])));
 
         if (!validPair(plugboard, selection[0], selection[1])) {
             validInput = false;

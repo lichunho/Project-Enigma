@@ -1,4 +1,5 @@
 #include "rotorOperations.hpp"
+#include "rotorData.hpp"
 
 /**************************************************************************
 importRotorDetails
@@ -6,27 +7,15 @@ importRotorDetails
 - Opens txt file and import the corresponding rotor detials
 **************************************************************************/
 rotor importRotorDetails(string rotorSelection) {
-  ifstream rotorDetails;
-  rotorDetails.open("rotor/rotorDetails.txt");
-
   rotor designatedRotor;
-  string rotorIndex;
-  string rotorWiring;
-  string rotorNotchPosition;
-  string disregardLine;
 
-  while (!rotorDetails.eof()) {
-    rotorDetails >> rotorIndex;
-    if (rotorIndex == rotorSelection) {
-      rotorDetails >> rotorWiring >> rotorNotchPosition;
-      designatedRotor.setWiring(rotorWiring);
-      designatedRotor.setNotch(rotorNotchPosition);
-    } else {
-      getline(rotorDetails, disregardLine);
-    }
+  const rotor_data::RotorSpec *spec = rotor_data::find(rotorSelection);
+  if (spec != nullptr) {
+    designatedRotor.setWiring(string(spec->wiring));
+    designatedRotor.setNotch(string(spec->notch));
+  } else {
+    cout << "ERROR - Invalid rotor selection: " << rotorSelection << endl;
   }
-
-  rotorDetails.close();
 
   return designatedRotor;
 }
@@ -54,16 +43,18 @@ rotorOperations
 - Incredment the rotors after each operation
 **************************************************************************/
 char rotorOperations(rotor rotor[], char input, bool debug) {
-  if (rotor[2].advanceNext()) {
+  bool middleAtNotch = rotor[2].advanceNext();
+  bool rightAtNotch = rotor[3].advanceNext();
+
+  if (middleAtNotch) {
     rotor[1].shift();
-    rotor[2].shift();
-    rotor[3].shift();
-  } else if (rotor[3].advanceNext()) {
-    rotor[2].shift();
-    rotor[3].shift();
-  } else {
-    rotor[3].shift();
   }
+
+  if (middleAtNotch || rightAtNotch) {
+    rotor[2].shift();
+  }
+
+  rotor[3].shift();
 
   if(debug)
   {
