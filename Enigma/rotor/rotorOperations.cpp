@@ -1,11 +1,4 @@
-#ifndef rotorOperations_H
-#define rotorOperations_H
-
-#include "rotorClass.h"
-#include <fstream>
-#include <iostream>
-
-using namespace std;
+#include "rotorOperations.hpp"
 
 /**************************************************************************
 importRotorDetails
@@ -14,7 +7,7 @@ importRotorDetails
 **************************************************************************/
 rotor importRotorDetails(string rotorSelection) {
   ifstream rotorDetails;
-  rotorDetails.open("rotorDetails.txt");
+  rotorDetails.open("rotor/rotorDetails.txt");
 
   rotor designatedRotor;
   string rotorIndex;
@@ -60,7 +53,7 @@ rotorOperations
 - Rotor 1 to 3 -> reflector -> rotor 3 -> 1
 - Incredment the rotors after each operation
 **************************************************************************/
-char rotorOperations(rotor rotor[], char input, bool debug = false) {
+char rotorOperations(rotor rotor[], char input, bool debug) {
   if (rotor[2].advanceNext()) {
     rotor[1].shift();
     rotor[2].shift();
@@ -93,5 +86,3 @@ char rotorOperations(rotor rotor[], char input, bool debug = false) {
 
   return input;
 }
-
-#endif

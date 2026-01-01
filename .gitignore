@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+main
+main-debug
+
+# macOS / Xcode artifacts
+.DS_Store
+*.dSYM/
